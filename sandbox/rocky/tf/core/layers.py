@@ -328,7 +328,7 @@ class OrthogonalInitializer(object):
         self.scale = scale
 
     def __call__(self, shape, dtype=tf.float32, *args, **kwargs):
-        result, = tf.py_func(py_ortho_init(self.scale), [shape], [tf.float32])
+        result, = tf.py_function(py_ortho_init(self.scale), [shape], [tf.float32])
         result.set_shape(shape)
         return result
 
