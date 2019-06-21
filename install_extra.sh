@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 conda init && conda activate rllab3
 cd 3rdparty
 cd Theano && git checkout adfe319ce6b781083d8dc3200fb4481b00853791 && cd ..
@@ -17,3 +18,7 @@ pip install tensorflow_gpu==1.13.1
 # original instruction: install tensorflow 1.0.1
 #pip install tensorflow_gpu-1.0.1-cp35-cp35m-linux_x86_64.whl
 cd ..
+# jupyter extensions
+conda install -c conda-forge jupyter_contrib_nbextensions
+pip install --upgrade nbdime
+pip install papermill
