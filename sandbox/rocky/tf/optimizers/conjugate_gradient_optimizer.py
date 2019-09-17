@@ -2,7 +2,7 @@ from rllab.misc import ext
 from rllab.misc import krylov
 from rllab.misc import logger
 from rllab.core.serializable import Serializable
-# from rllab.misc.ext import flatten_tensor_variables
+# from rllab.utils.ext import flatten_tensor_variables
 import itertools
 import numpy as np
 import tensorflow as tf
