@@ -8,7 +8,6 @@ import time
 import traceback
 import sys
 
-
 class ProgBarCounter(object):
     def __init__(self, total_count):
         self.total_count = total_count
