@@ -94,10 +94,9 @@ class NormalizedEnv(ProxyEnv, Serializable):
     def __str__(self):
         return "Normalized: %s" % self._wrapped_env
 
-    # def log_diagnostics(self, paths):
-    #     print "Obs mean:", self._obs_mean
-    #     print "Obs std:", np.sqrt(self._obs_var)
-    #     print "Reward mean:", self._reward_mean
-    #     print "Reward std:", np.sqrt(self._reward_var)
+    def log_diagnostics(self, paths):
+        print("Obs mean:", self._obs_mean)
+        print("Obs std:", np.sqrt(self._obs_var))
+        print("Reward mean:", self._reward_mean)
+        print("Reward std:", np.sqrt(self._reward_var))
 
-normalize = NormalizedEnv

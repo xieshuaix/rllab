@@ -202,6 +202,7 @@ class GRUNetwork(object):
                 l_gru, shape=(-1, hidden_dim),
                 name="gru_flat"
             )
+
             l_output_flat = L.DenseLayer(
                 l_gru_flat,
                 num_units=output_dim,
