@@ -1,4 +1,4 @@
-numpy==1.15.0
-path.py
-cached_property
+numpy==1.16.4
+path.py==11.1.0
+cached_property==1.5.1
 tensorflow==1.13.2
