@@ -1,5 +1,7 @@
-from path import Path
 import sys
+pyversion = sys.version_info
+if pyversion.major > 2:
+    from path import Path
 import pickle as pickle
 import random
 from rllab.misc.console import colorize, Message
@@ -48,7 +50,10 @@ def cached_function(inputs, outputs):
         else:
             hash_content = theano.pp(outputs)
     cache_key = hex(hash(hash_content) & (2 ** 64 - 1))[:-1]
-    cache_dir = Path('~/.hierctrl_cache')
+    if pyversion > 2:
+        cache_dir = Path('~/.hierctrl_cache')
+    else:
+        cache_dir = '~/hierctrl_cache'
     cache_dir = cache_dir.expanduser()
     cache_dir.mkdir_p()
     cache_file = cache_dir / ('%s.pkl' % cache_key)
