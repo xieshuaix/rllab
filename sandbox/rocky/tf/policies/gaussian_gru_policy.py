@@ -182,24 +182,26 @@ class GaussianGRUPolicy(StochasticPolicy, LayersPowered, Serializable):
 
     @overrides
     def get_actions(self, observations):
+        """
+        :param observations:
+        :return: actions(v_vehh * action_size)
+        """
         flat_obs = self.observation_space.flatten_n(observations)
         if self.state_include_action:
             assert self.prev_actions is not None
-            all_input = np.concatenate([
-                flat_obs,
-                self.prev_actions
-            ], axis=-1)
+            all_input = np.concatenate([flat_obs,
+                                        self.prev_actions
+                                        ], axis=-1)
         else:
             all_input = flat_obs
         means, log_stds, hidden_vec = self.f_step_mean_std(all_input, self.prev_hiddens)
         rnd = np.random.normal(size=means.shape)
         actions = rnd * np.exp(log_stds) + means
-        prev_actions = self.prev_actions
-        self.prev_actions = self.action_space.flatten_n(actions)
-        self.prev_hiddens = hidden_vec
         agent_info = dict(mean=means, log_std=log_stds)
         if self.state_include_action:
-            agent_info["prev_action"] = np.copy(prev_actions)
+            agent_info["prev_action"] = np.copy(self.prev_actions)
+        self.prev_actions = self.action_space.flatten_n(actions)
+        self.prev_hiddens = hidden_vec
         return actions, agent_info
 
     @property
