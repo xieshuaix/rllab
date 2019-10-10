@@ -43,3 +43,11 @@ class ProxyEnv(Env, Serializable):
 
     def set_param_values(self, params):
         self._wrapped_env.set_param_values(params)
+
+    def unwrap(self):
+        if not hasattr(self, '_wrapped_env'):
+            return self
+        wrapped = self._wrapped_env
+        if not hasattr(wrapped, 'unwrap'):
+            return wrapped
+        return wrapped.unwrap()
