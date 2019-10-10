@@ -65,6 +65,10 @@ class NormalizedEnvNative(ProxyEnv, Serializable):
         self._obs_var = d["_obs_var"]
 
     @property
+    def normalized(self):
+        return True
+
+    @property
     @overrides
     def action_space(self):
         if isinstance(self._wrapped_env.action_space, box_native.BoxNative):
