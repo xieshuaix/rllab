@@ -81,6 +81,8 @@ class NormalizedEnvNative(ProxyEnv, Serializable):
         if isinstance(self._wrapped_env.action_space, box_native.BoxNative):
             # rescale the action
             lb, ub = self._wrapped_env.action_space.bounds
+            if np.any(np.abs(action)) > 1.0:
+                raise ValueError('action must be normalized')
             scaled_action = lb + (action + 1.) * 0.5 * (ub - lb)
             scaled_action = np.clip(scaled_action, lb, ub)
         else:
