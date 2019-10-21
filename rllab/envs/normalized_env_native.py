@@ -42,6 +42,11 @@ class NormalizedEnvNative(ProxyEnv, Serializable):
         self._update_obs_estimate(obs)
         return (obs - self._obs_mean) / (np.sqrt(self._obs_var) + 1e-8)
 
+    def _apply_normalize_obs_no_update(self, obs):
+        if len(obs) == 0:
+            return np.array([])
+        return (obs - self._obs_mean) / (np.sqrt(self._obs_var) + 1e-8)
+
     def _apply_normalize_reward(self, reward):
         self._update_reward_estimate(reward)
         return reward / (np.sqrt(self._reward_var) + 1e-8)
@@ -91,6 +96,8 @@ class NormalizedEnvNative(ProxyEnv, Serializable):
         next_obs, reward, done, info = wrapped_step
         if self._normalize_obs:
             next_obs = self._apply_normalize_obs(next_obs)
+            info['obs_upper_bound'] = self._apply_normalize_obs_no_update(info['obs_upper_bound'])
+            info['obs_lower_bound'] = self._apply_normalize_obs_no_update(info['obs_lower_bound'])
         if self._normalize_reward:
             reward = self._apply_normalize_reward(reward)
         return Step(next_obs, reward * self._scale_reward, done, **info)
